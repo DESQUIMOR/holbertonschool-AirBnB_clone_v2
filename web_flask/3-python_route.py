@@ -1,4 +1,13 @@
 #!/usr/bin/python3
+"""Flask web application with multiple routes.
+
+Routes:
+    /: returns "Hello HBNB!"
+    /hbnb: returns "HBNB"
+    /c/<text>: returns "C <text>" (underscores replaced with spaces)
+    /python/(<text>): returns "Python <text>" (default is "is cool")
+"""
+
 from flask import Flask
 
 app = Flask(__name__)
