@@ -27,7 +27,10 @@ def hbnb():
 
 @app.route('/c/<text>', strict_slashes=False)
 def c_text(text):
-    """Route /c/<text>: display 'C ' followed by text with _ replaced by space"""
+    """
+    Route /c/<text>: display 'C ' followed by text
+    with _ replaced by space
+    """
     text = text.replace('_', ' ')
     return f"C {text}"
 
@@ -35,7 +38,10 @@ def c_text(text):
 @app.route('/python/', defaults={'text': 'is cool'}, strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
 def python_text(text):
-    """Route /python/(<text>): display 'Python ' followed by text or default"""
+    """
+    Route /python/(<text>): display 'Python ' followed by text
+    or default value if no text is provided
+    """
     text = text.replace('_', ' ')
     return f"Python {text}"
 
