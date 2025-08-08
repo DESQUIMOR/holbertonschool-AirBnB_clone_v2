@@ -1,60 +1,58 @@
 #!/usr/bin/python3
-"""Flask web application with dynamic routes.
+"""Starts a Flask web application.
 
+The application listens on 0.0.0.0, port 5000.
 Routes:
-    /: returns "Hello HBNB!"
-    /hbnb: returns "HBNB"
-    /c/<text>: returns "C <text>" (underscores replaced with spaces)
-    /python/(<text>): returns "Python <text>" (default is "is cool")
-    /number/<n>: returns "<n> is a number" (only if n is integer)
+    /: Displays 'Hello HBNB!'.
+    /hbnb: Displays 'HBNB'.
+    /c/<text>: Displays 'C' followed by the value of <text>.
+    /python/(<text>): Displays 'Python' followed by the value of <text>.
+    /number/<n>: Displays 'n is a number' only if <n> is an integer.
 """
-
 from flask import Flask
+from flask import abort
 
 app = Flask(__name__)
 
 
-@app.route('/', strict_slashes=False)
-def hello():
-    """Route /: display 'Hello HBNB!'"""
+@app.route("/", strict_slashes=False)
+def hello_hbnb():
+    """Displays 'Hello HBNB!'."""
     return "Hello HBNB!"
 
 
-@app.route('/hbnb', strict_slashes=False)
+@app.route("/hbnb", strict_slashes=False)
 def hbnb():
-    """Route /hbnb: display 'HBNB'"""
+    """Displays 'HBNB'."""
     return "HBNB"
 
 
-@app.route('/c/<text>', strict_slashes=False)
-def c_text(text):
+@app.route("/c/<text>", strict_slashes=False)
+def c(text):
+    """Displays 'C' followed by the value of <text>.
+
+    Replaces any underscores in <text> with slashes.
     """
-    Route /c/<text>: display 'C ' followed by text
-    with _ replaced by space
-    """
-    text = text.replace('_', ' ')
-    return f"C {text}"
+    text = text.replace("_", " ")
+    return "C {}".format(text)
 
 
-@app.route('/python/', defaults={'text': 'is cool'}, strict_slashes=False)
-@app.route('/python/<text>', strict_slashes=False)
-def python_text(text):
+@app.route("/python", strict_slashes=False)
+@app.route("/python/<text>", strict_slashes=False)
+def python(text="is cool"):
+    """Displays 'Python' followed by the value of <text>.
+
+    Replaces any underscores in <text> with slashes.
     """
-    Route /python/(<text>): display 'Python ' followed by text
-    or default value if no text is provided
-    """
-    text = text.replace('_', ' ')
-    return f"Python {text}"
+    text = text.replace("_", " ")
+    return "Python {}".format(text)
 
 
-@app.route('/number/<int:n>', strict_slashes=False)
+@app.route("/number/<int:n>", strict_slashes=False)
 def number(n):
-    """
-    Route /number/<n>: display '<n> is a number'
-    only if n is an integer
-    """
-    return f"{n} is a number"
+    """Displays 'n is a number' only if n is an integer."""
+    return "{} is a number".format(n)
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0")
